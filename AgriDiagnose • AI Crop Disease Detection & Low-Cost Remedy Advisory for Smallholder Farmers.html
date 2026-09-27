@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:8080/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers</title>
+  <meta name="description" content="AI-powered crop disease detection platform for small-scale farmers. Instant multimodal diagnosis, early severity ratings, low-cost organic remedies, and multilingual voice advisory.">
+  
+  <!-- Modern Typography Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/css2" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/main.css">
+  <link rel="stylesheet" href="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/components.css">
+  <link rel="stylesheet" href="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/responsive.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <a href="http://localhost:8080/#" class="brand-wrapper" id="brandHomeLink">
+      <div class="brand-logo" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <path d="M12 8a3 3 0 0 0-3 3c0 2 3 5 3 5s3-3 3-5a3 3 0 0 0-3-3z"></path>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1 id="appTitleText">AgriDiagnose</h1>
+        <p id="appTaglineText">AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers</p>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <!-- Language Selector -->
+      <div class="lang-selector-wrap" title="Select Language">
+        <select id="languageSelect" class="lang-select" aria-label="Select Language">
+          <option value="en" selected="">🇬🇧 English</option>
+          <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+          <option value="bn">🇧🇩 বাংলা (Bengali)</option>
+          <option value="es">🇪🇸 Español (Spanish)</option>
+        </select>
+        <span class="lang-icon" aria-hidden="true">▼</span>
+      </div>
+
+      <!-- History Modal Trigger -->
+      <button id="btnOpenHistory" class="btn btn-secondary btn-sm" title="View past scans">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span id="navHistoryText">Scan History</span>
+      </button>
+
+      <!-- Gemini API Status / Modal Trigger -->
+      <button id="btnOpenApiModal" class="api-badge offline" title="Configure Gemini 1.5/2.0 API Key">
+        <span class="status-dot"></span>
+        <span id="apiStatusText">Offline Expert Engine Active</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="container">
+    
+    <!-- Hero Header -->
+    <header class="hero-banner">
+      <div class="hero-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+        <span id="heroBadgeText">Prioritize Low-Cost Organic Care • Curb Pesticide Overuse</span>
+      </div>
+      <h2 id="heroHeading">Detect Crop Diseases Early, Protect Your Yield</h2>
+      <p id="heroSub">Upload or photograph any affected crop leaf. Get instant diagnosis, early severity ratings, and low-cost organic treatments before turning to expensive chemicals.</p>
+    </header>
+
+    <!-- Interactive Workspace Grid -->
+    <section class="workspace-grid" aria-label="Crop Disease Diagnosis Workspace">
+      
+      <!-- Left Column: Leaf Capture System -->
+      <article class="card capture-card">
+        
+        <!-- Mode Switcher Tabs -->
+        <div class="capture-tabs" role="tablist">
+          <button id="tabUploadBtn" class="capture-tab-btn active" role="tab" aria-selected="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span id="tabUploadText">Upload Leaf Photo</span>
+          </button>
+          <button id="tabCameraBtn" class="capture-tab-btn" role="tab" aria-selected="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span id="tabCameraText">Live Field Camera</span>
+          </button>
+        </div>
+
+        <!-- Mode 1: File Dropzone -->
+        <div id="dropzoneArea" class="dropzone" tabindex="0" role="button" aria-label="Upload photo dropzone">
+          <input type="file" id="fileInput" accept="image/*" style="display: none;" aria-hidden="true">
+          <div class="dropzone-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path>
+            </svg>
+          </div>
+          <h4 id="dropzoneTitle">Drop leaf photo here or click to browse</h4>
+          <p id="dropzoneSub">Supports JPG, PNG, WEBP (Max 10MB). For best results, capture close-up with good daylight.</p>
+          <button type="button" id="btnBrowseTrigger" class="btn btn-outline-green btn-sm">
+            <span id="btnBrowseText">Choose Photo</span>
+          </button>
+        </div>
+
+        <!-- Mode 2: Camera Viewfinder (Initially Hidden) -->
+        <div id="cameraArea" class="camera-viewfinder" style="display: none;">
+          <video id="cameraVideo" class="camera-video" autoplay="" playsinline="" muted=""></video>
+          <canvas id="cameraCanvas" style="display: none;"></canvas>
+          <div class="viewfinder-reticle"></div>
+          
+          <div class="camera-controls">
+            <button id="btnFlipCamera" class="camera-btn-icon" title="Switch Camera" aria-label="Flip camera">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+            </button>
+            <button id="btnSnapPhoto" class="snap-btn" title="Capture Leaf Photo" aria-label="Capture snapshot">
+              <div class="snap-btn-inner"></div>
+            </button>
+            <button id="btnCloseCamera" class="camera-btn-icon" title="Close Camera" aria-label="Close camera">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview Stage (Shows after image upload or snapshot) -->
+        <div id="previewContainer" class="preview-container" style="display: none;">
+          <img id="leafPreviewImg" class="preview-img" src="http://localhost:8080/" alt="Selected crop leaf for diagnosis">
+          <div class="preview-overlay">
+            <button id="btnRetakePhoto" class="btn btn-secondary btn-sm" style="background: rgba(0,0,0,0.7); color: white; border: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span id="btnRetakeText">Retake Photo</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Sample Gallery -->
+        <div class="sample-section">
+          <div class="sample-section-header">
+            <h4 id="sampleTitle">Or Test with Sample Diseased Leaves</h4>
+            <p id="sampleDesc">Click any real-world field sample below to test instant diagnostic analysis:</p>
+          </div>
+          <div class="sample-grid">
+            <div class="sample-card" data-sample="tomato_late_blight" id="sampleTomatoBtn" tabindex="0" role="button">
+              <img src="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/tomato_late_blight.jpg" alt="Tomato Late Blight sample" class="sample-thumb">
+              <span id="sampleTomatoLabel">Tomato Late Blight</span>
+            </div>
+            <div class="sample-card" data-sample="rice_blast" id="sampleRiceBtn" tabindex="0" role="button">
+              <img src="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/rice_blast.jpg" alt="Rice Blast sample" class="sample-thumb">
+              <span id="sampleRiceLabel">Rice Blast</span>
+            </div>
+            <div class="sample-card" data-sample="potato_early_blight" id="samplePotatoBtn" tabindex="0" role="button">
+              <img src="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/potato_early_blight.jpg" alt="Potato Early Blight sample" class="sample-thumb">
+              <span id="samplePotatoLabel">Potato Early Blight</span>
+            </div>
+            <div class="sample-card" data-sample="healthy_capsicum" id="sampleCapsicumBtn" tabindex="0" role="button">
+              <img src="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/healthy_capsicum.jpg" alt="Healthy Bell Pepper sample" class="sample-thumb">
+              <span id="sampleCapsicumLabel">Healthy Bell Pepper</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="action-bar">
+          <button id="btnRunDiagnosis" class="btn btn-primary btn-lg btn-analyze" disabled="">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <span id="btnAnalyzeText">Run AI Diagnosis</span>
+          </button>
+        </div>
+
+      </article>
+
+      <!-- Right Column: Diagnostic & Advisory Results -->
+      <article class="card results-card" id="resultsCard">
+        
+        <!-- Loading State during AI Analysis -->
+        <div id="analyzingBox" class="analyzing-box">
+          <div class="radar-spinner"></div>
+          <h3 id="analyzingText">Analyzing Leaf with Multimodal AI...</h3>
+          <p id="analyzingSub">Scanning cellular discoloration, lesion morphology, and pathogen signatures...</p>
+        </div>
+
+        <!-- Empty State (Before Diagnosis) -->
+        <div id="resultsEmptyState" class="results-empty-state">
+          <div class="results-empty-icon" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+              <path d="M12 6v6l4 2"></path>
+            </svg>
+          </div>
+          <h3 id="emptyStateHeading">Awaiting Plant Leaf</h3>
+          <p id="emptyStateSub">Select a photo from your device, take a camera snapshot, or click any sample leaf on the left to view instant diagnosis and low-cost remedies.</p>
+        </div>
+
+        <!-- Diagnosis Report View (Rendered dynamically) -->
+        <div id="reportContainer" style="display: none;">
+          
+          <!-- Results Header -->
+          <div class="results-header">
+            <div class="results-badges-row">
+              <span id="reportCropTag" class="crop-tag">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22v-7"></path><path d="M9 9l3-7 3 7"></path><path d="M9 15a3 3 0 0 1 6 0"></path>
+                </svg>
+                <span id="cropNameText">Tomato</span>
+              </span>
+              <span id="reportConfidence" class="confidence-badge">96.8% Confidence</span>
+            </div>
+            
+            <h3 id="diseaseNameText" class="disease-name">Late Blight</h3>
+            <p id="scientificNameText" class="scientific-name">Phytophthora infestans</p>
+          </div>
+
+          <!-- Severity Gauge Meter -->
+          <div class="severity-box">
+            <div class="severity-label-row">
+              <span id="severityStageTitle">Severity Stage:</span>
+              <span id="severityStageBadge" class="severity-tag severity-moderate">Moderate Stage (48%)</span>
+            </div>
+            <div class="severity-meter-track" title="Estimated leaf infection area">
+              <div id="severityMeterFill" class="severity-meter-fill" style="width: 48%;"></div>
+            </div>
+          </div>
+
+          <!-- Text-to-Speech Voice Narration Bar -->
+          <div id="audioNarratorBar" class="audio-narrator-bar">
+            <div class="audio-narrator-left">
+              <button id="btnToggleSpeech" class="btn btn-primary btn-sm" aria-label="Listen to voice advice">
+                <svg id="speechPlayIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span id="listenAdviceText">Listen to Advice (Audio)</span>
+              </button>
+              <div class="soundwave" aria-hidden="true">
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+              </div>
+            </div>
+            <button id="btnExportPrint" class="btn btn-outline-green btn-sm" title="Print Field Diagnostic Report">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              <span id="btnPrintText">Print / Export Report</span>
+            </button>
+          </div>
+
+          <!-- Symptoms List -->
+          <div class="symptoms-card">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span id="symptomsHeading">Observed Pathological Symptoms</span>
+            </h4>
+            <ul id="symptomsList" class="symptoms-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+
+          <!-- Treatment Advisory Tabs -->
+          <div class="remedy-tabs-wrapper">
+            <div class="remedy-nav-tabs" role="tablist">
+              <button class="remedy-nav-tab active" data-pane="paneOrganic" role="tab" aria-selected="true" id="tabOrganicHeader">🌿 Organic &amp; Low-Cost Remedies (Priority 1)</button>
+              <button class="remedy-nav-tab" data-pane="paneChemical" role="tab" aria-selected="false" id="tabChemicalHeader">🧪 Chemical Rescue &amp; Safe Dosage (Priority 2)</button>
+              <button class="remedy-nav-tab" data-pane="panePrevention" role="tab" aria-selected="false" id="tabPreventionHeader">🛡️ Future Crop Prevention</button>
+              <button class="remedy-nav-tab" data-pane="paneCalculator" role="tab" aria-selected="false" id="tabCalcHeader">⚖️ Spray Tank Calculator</button>
+            </div>
+
+            <!-- Pane 1: Organic First (Eco-Friendly) -->
+            <div id="paneOrganic" class="remedy-pane active" role="tabpanel">
+              <div class="organic-card">
+                <span class="organic-card-badge" id="badgeRecommendedFirst">RECOMMENDED FIRST</span>
+                <p id="organicNoticeText" style="font-size: 0.85rem; color: #166534; margin-bottom: 0.5rem;">Always apply organic/bio-control solutions first to prevent pesticide resistance, preserve soil health, and save farm income.</p>
+                <div id="organicRemediesContainer">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 2: Chemical Rescue & Safe Dosage -->
+            <div id="paneChemical" class="remedy-pane" role="tabpanel">
+              <div class="chemical-card">
+                <div class="chemical-alert-banner">
+                  <strong id="chemWarningTitle">⚠️ Hazard &amp; Judicious Use Warning:</strong>
+                  <p id="chemWarningText" style="margin-top: 0.25rem;">Chemical fungicides should only be applied if organic remedies fail or disease severity exceeds 40%. Always wear protective gloves and a face mask. Do not spray during windy conditions or high pollinator activity.</p>
+                </div>
+
+                <div class="chemical-detail-grid">
+                  <div class="chemical-detail-box">
+                    <label id="activeIngLabel">Active Ingredient / Chemical:</label>
+                    <div id="chemActiveIngredient">Mancozeb 75% WP</div>
+                  </div>
+                  <div class="chemical-detail-box">
+                    <label id="dosageRateLabel">Safe Dilution Rate:</label>
+                    <div id="chemStandardDosage">2.0 g / Liter of water</div>
+                  </div>
+                  <div class="chemical-detail-box">
+                    <label id="sprayIntervalLabel">Spray Frequency:</label>
+                    <div id="chemSprayInterval">Every 10-12 days</div>
+                  </div>
+                  <div class="chemical-detail-box">
+                    <label id="phiLabel">Pre-Harvest Interval (Waiting Period):</label>
+                    <div id="chemPhi">7 Days Waiting Period</div>
+                  </div>
+                </div>
+
+                <div class="recipe-block" style="background: #ffffff; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid #fed7aa;">
+                  <strong id="safetyWarningLabel">Safety Protocol:</strong>
+                  <p id="chemSafetyProtocolText" style="font-size: 0.85rem; margin-top: 0.25rem; color: #7c2d12;">
+                    Wear rubber gloves and mask. Do not spray against the wind. Wash spray equipment away from wells or water bodies.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 3: Prevention & Cultural Practices -->
+            <div id="panePrevention" class="remedy-pane" role="tabpanel">
+              <div class="card" style="padding: 1rem; background: #f8fafc;">
+                <p id="preventionIntroText" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Long-term agronomic practices to eliminate soil pathogens and build resilient crops:</p>
+                <ul id="preventionList" class="symptoms-list">
+                  <!-- Dynamically populated -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- Pane 4: Knapsack Spray Tank Calculator -->
+            <div id="paneCalculator" class="remedy-pane" role="tabpanel">
+              <div class="calc-card">
+                <h4 id="calcTitle" style="font-size: 1rem; margin-bottom: 0.25rem;">Knapsack Spray Tank Dilution Calculator</h4>
+                <p id="calcSubtitle" style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Calculate exact chemical powder/liquid and water required to prevent chemical burns and waste.</p>
+
+                <div class="calc-input-group">
+                  <label for="tankSizeInput" id="labelTankCapacity">Sprayer Tank Capacity (Liters)</label>
+                  <select id="tankSizeInput">
+                    <option value="15" selected="">15 Liters (Standard Knapsack Backpack)</option>
+                    <option value="16">16 Liters (Manual Battery Sprayer)</option>
+                    <option value="20">20 Liters (Heavy Duty Knapsack)</option>
+                    <option value="50">50 Liters (Power Sprayer Tank)</option>
+                    <option value="100">100 Liters (Tractor / Drum Tank)</option>
+                  </select>
+                </div>
+
+                <div class="calc-input-group">
+                  <label for="fieldAreaInput" id="labelFieldArea">Field Area to Cover</label>
+                  <input type="number" id="fieldAreaInput" value="1.0" min="0.1" step="0.1">
+                </div>
+
+                <div class="calc-input-group">
+                  <label for="calcDosageInput" id="labelDosageRate">Recommended Chemical Rate per Liter</label>
+                  <input type="number" id="calcDosageInput" value="2.0" min="0.1" step="0.1">
+                </div>
+
+                <button id="btnRecalculateMix" class="btn btn-secondary btn-sm" style="width: 100%;">
+                  <span id="btnCalculateText">Calculate Tank Mix</span>
+                </button>
+
+                <div class="calc-output-box">
+                  <div class="calc-metric-row">
+                    <span id="metricPerTankLabel">Per Tank Mixture:</span>
+                    <strong id="metricPerTankVal">30.0 g / ml / tank</strong>
+                  </div>
+                  <div class="calc-metric-row">
+                    <span id="metricTotalWaterLabel">Total Water Needed:</span>
+                    <strong id="metricTotalWaterVal">160 Liters</strong>
+                  </div>
+                  <div class="calc-metric-row">
+                    <span id="metricRefillsLabel">Knapsack Refills Needed:</span>
+                    <strong id="metricRefillsVal">11 Tanks</strong>
+                  </div>
+                  <div class="calc-metric-row">
+                    <span id="metricTotalChemLabel">Chemical Quantity Required:</span>
+                    <strong id="metricTotalChemVal">320.0 g / ml</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <strong>AgriDiagnose Platform</strong> • Empowering rural farmers with accessible AI agronomist intelligence.
+      </div>
+      <div class="helpline-pill" title="National Agriculture Helpline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span id="helplineFooterText">1800-180-1551 (Toll-Free, 22 Languages)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal: Gemini API Key Setup -->
+  <div id="modalApiKey" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalApiTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalApiTitle">Gemini Multimodal API Configuration</h3>
+        <button id="btnCloseApiModal" class="btn-close-modal" aria-label="Close modal">✕</button>
+      </div>
+      <p id="apiKeyModalDesc" style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+        Enter your Google Gemini API key to enable live multimodal plant pathology analysis. If left empty, AgriDiagnose uses its built-in Offline Agronomic Expert Engine.
+      </p>
+      <div class="calc-input-group">
+        <label for="inputApiKey">Gemini API Key</label>
+        <input type="password" id="inputApiKey" placeholder="AIzaSy...">
+      </div>
+      <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
+        <button id="btnSaveApiKey" class="btn btn-primary" style="flex: 1;">Save &amp; Connect</button>
+        <button id="btnClearApiKey" class="btn btn-secondary">Use Offline Engine</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Scan History Drawer -->
+  <div id="modalHistory" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalHistoryTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalHistoryTitle">Field Scan History</h3>
+        <button id="btnCloseHistoryModal" class="btn-close-modal" aria-label="Close modal">✕</button>
+      </div>
+      <div id="historyListContainer" style="max-height: 380px; overflow-y: auto;">
+        <!-- Dynamically rendered -->
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 1.25rem;">
+        <button id="btnClearHistoryBtn" class="btn btn-secondary btn-sm">Clear History</button>
+        <button id="btnCloseHistoryAction" class="btn btn-primary btn-sm">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Application Controller -->
+  <script type="module" src="./AgriDiagnose • AI Crop Disease Detection &amp; Low-Cost Remedy Advisory for Smallholder Farmers_files/app.js.download"></script>
+
+
+</body></html>
